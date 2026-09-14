@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript tehtävät</title>
+</head>
+
+<body>
+
+    <h1>JavaScript-tehtävät</h1>
+
+    <!-- 1. innerHTML -->
+    <h2>1. Elementin sisällön muuttaminen</h2>
+
+    <p id="teksti">Vanha teksti</p>
+
+    <button type="button" onclick="myFunction()">Click Me!</button>
+
+
+    <!-- 2. Funktio ja parametrit -->
+    <h2>2. Painoindeksi</h2>
+
+    <button type="button" onclick="funktio1()">Laske painoindeksi</button>
+
+
+    <!-- 3. Päivämäärä ja aika -->
+    <h2>3. Päivämäärä ja aika</h2>
+
+    <p id="demo">Paina nappia</p>
+
+    <button type="button" onclick="naytaAika()">Näytä aika</button>
+
+
+    <!-- 4. Sekunnit -->
+    <h2>4. Sekunnit</h2>
+
+    <button type="button" onclick="segunnit()">vierailusekunnit</button>
+
+    <ul id="sekunnit"></ul>
+
+
+    <script>
+
+        // 1. Muuttaa elementin sisältöä
+        function myFunction() {
+            document.getElementById("teksti").innerHTML = "Uusi teksti!";
+        }
+
+
+        // 2. Funktio 1 kutsuu funktiota 2
+        function funktio1() {
+            let pituus = 1.80;
+            let paino = 80;
+
+            let tulos = funktio2(pituus, paino);
+
+            alert("Painoindeksi on " + tulos);
+        }
+
+        // Funktio 2 laskee painoindeksin
+        function funktio2(pituus, paino) {
+            return paino / (pituus * pituus);
+        }
+
+
+        // 3. Näyttää päivämäärän, ajan ja getTime()-arvon
+        function naytaAika() {
+            const d = new Date();
+
+            document.getElementById("demo").innerHTML =
+                "Päivämäärä ja aika: " + d + "<br>" +
+                "getTime(): " + d.getTime() + "<br>" +
+                "getTime() sekunteina: " + Math.floor(d.getTime() / 1000);
+        }
+
+
+        // 4. Käydään sekunnit läpi for-loopilla
+        function segunnit() {
+
+            let lista = document.getElementById("sekunnit");
+
+            lista.innerHTML = "";
+
+            let nyt = new Date();
+            let nykyinenSekunti = nyt.getSeconds();
+
+            for (let i = 0; i <= nykyinenSekunti; i++) {
+
+                if (i % 2 == 0) {
+                    lista.innerHTML +=
+                        "<li style='color: gray'>" + i + "</li>";
+                } else {
+                    lista.innerHTML +=
+                        "<li style='color: pink'>" + i + "</li>";
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>

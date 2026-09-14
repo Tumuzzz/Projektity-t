@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tietovisa</title>
+</head>
+<body>
+
+    <h1>Tietokilpailu</h1>
+
+    <h2 id="question"></h2>
+
+    <button onclick="answer(0)" id="answer0"></button>
+    <button onclick="answer(1)" id="answer1"></button>
+    <button onclick="answer(2)" id="answer2"></button>
+
+    <p id="result"></p>
+
+    <script>
+        const questions = [
+            {
+                question: "Mikä on Suomen pääkaupunki?",
+                answers: ["Turku", "Helsinki", "Tampere"],
+                correct: 1
+            },
+            {
+                question: "Paljonko on 2 + 2?",
+                answers: ["3", "4", "5"],
+                correct: 1
+            },
+            {
+                question: "Mikä on paras koulu",
+                answers: ["vammaiskoulu", "kotikoulu", "etäkoulu"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function showQuestion() {
+            document.getElementById("question").textContent =
+                questions[currentQuestion].question;
+
+            document.getElementById("answer0").textContent =
+                questions[currentQuestion].answers[0];
+
+            document.getElementById("answer1").textContent =
+                questions[currentQuestion].answers[1];
+
+            document.getElementById("answer2").textContent =
+                questions[currentQuestion].answers[2];
+
+            document.getElementById("result").textContent = "";
+        }
+
+        function answer(choice) {
+            if (choice === questions[currentQuestion].correct) {
+                document.getElementById("result").textContent = "Oikein! 🎉";
+            } else {
+                document.getElementById("result").textContent = "Väärin! ❌";
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                setTimeout(showQuestion, 1000);
+            } else {
+                setTimeout(function() {
+                    document.getElementById("question").textContent =
+                        "Tietovisa loppui!";
+                    document.getElementById("result").textContent = "";
+                    document.getElementById("answer0").style.display = "none";
+                    document.getElementById("answer1").style.display = "none";
+                    document.getElementById("answer2").style.display = "none";
+                }, 1000);
+            }
+        }
+
+        showQuestion();
+    </script>
+
+</body>
+</html>
