@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arvaa numero</title>
+</head>
+<body>
+
+<h1>Arvaa numero</h1>
+
+<p>Arvaa luku väliltä 1–100:</p>
+
+<input type="number" id="arvaus">
+<button onclick="arvaa()">Arvaa</button>
+
+<p id="tulos"></p>
+
+<script>
+    // Tietokone arpoo luvun 1-100
+    let numero = Math.floor(Math.random() * 100) + 1;
+
+    function arvaa() {
+        let arvaus = Number(document.getElementById("arvaus").value);
+
+        if (arvaus > numero) {
+            document.getElementById("tulos").innerHTML = "Liian suuri!";
+        } 
+        else if (arvaus < numero) {
+            document.getElementById("tulos").innerHTML = "Liian pieni!";
+        } 
+        else {
+            document.getElementById("tulos").innerHTML = "Oikein! 🎉";
+        }
+    }
+</script>
+
+</body>
+</html>

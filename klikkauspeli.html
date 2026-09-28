@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Klikkauspeli</title>
+</head>
+<body>
+
+<h1>Catch the Target</h1>
+
+<p>Pisteet: <span id="pisteet">0</span></p>
+<p>Aikaa: <span id="aika">30</span> sekuntia</p>
+
+<button id="kohde" onclick="osuma()">KLIKKAUS!</button>
+
+<script>
+    let pisteet = 0;
+    let aika = 30;
+
+    let kohde = document.getElementById("kohde");
+
+    function osuma() {
+        pisteet++;
+        document.getElementById("pisteet").innerHTML = pisteet;
+
+        // Uusi satunnainen paikka
+        kohde.style.position = "absolute";
+        kohde.style.left = Math.random() * 500 + "px";
+        kohde.style.top = Math.random() * 300 + "px";
+    }
+
+    // Ajastin
+    let ajastin = setInterval(function() {
+        aika--;
+        document.getElementById("aika").innerHTML = aika;
+
+        if (aika == 0) {
+            clearInterval(ajastin);
+            kohde.disabled = true;
+            kohde.innerHTML = "Peli loppui!";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>

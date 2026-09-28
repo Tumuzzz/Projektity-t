@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ristinolla</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .board button {
+            width: 80px;
+            height: 80px;
+            font-size: 32px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ristinolla</h1>
+    <div id="status">Pelaajan X vuoro</div>
+
+    <!-- Vaihe 1: Painikerunko -->
+    <div class="board">
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+    </div>
+
+    <script>
+        // Vaihe 3: Pelaajien vuorottelu
+        let vuoro = 'X';
+
+        const napit = document.querySelectorAll('.board button');
+        const statusTeksti = document.getElementById('status');
+
+        // Vaihe 4: Kirjoita toiminnallisuus painikkeille
+        function kasitteleKlikkaus(event) {
+            const nappi = event.target;
+
+            // Tarkistetaan, onko painikkeessa jo tekstiä
+            if (nappi.textContent !== '') {
+                return; // Jos on, ei tehdä mitään
+            }
+
+            // Asetetaan nykyisen pelaajan merkki
+            nappi.textContent = vuoro;
+
+            // Vaihdetaan vuoroa
+            if (vuoro === 'X') {
+                vuoro = 'O';
+            } else {
+                vuoro = 'X';
+            }
+
+            // Päivitetään statusviesti
+            statusTeksti.textContent = 'Pelaajan ' + vuoro + ' vuoro';
+        }
+
+        // Vaihe 5: Liitä funktio kaikkiin painikkeisiin (Vaihe 2 mukana)
+        napit.forEach(function(nappi) {
+            nappi.addEventListener('click', kasitteleKlikkaus);
+        });
+    </script>
+
+</body>
+</html>

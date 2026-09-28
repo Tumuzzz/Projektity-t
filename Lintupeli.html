@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flappy Bird</title>
+</head>
+<body>
+
+<h1>Flappy Bird</h1>
+
+<p>Paina välilyöntiä hypätäksesi!</p>
+
+<div id="peli" style="
+    width: 500px;
+    height: 400px;
+    background-color: lightblue;
+    position: relative;
+    overflow: hidden;
+">
+
+    <div id="lintu" style="
+        width: 30px;
+        height: 30px;
+        background-color: yellow;
+        position: absolute;
+        left: 100px;
+        top: 150px;
+    "></div>
+
+    <div id="putki" style="
+        width: 50px;
+        height: 150px;
+        background-color: green;
+        position: absolute;
+        left: 500px;
+        top: 0px;
+    "></div>
+
+</div>
+
+<p id="tulos"></p>
+
+<script>
+    let lintu = document.getElementById("lintu");
+    let putki = document.getElementById("putki");
+
+    let y = 150;
+    let nopeus = 0;
+    let peli = true;
+
+    // Välilyönti = hyppy
+    document.addEventListener("keydown", function(event) {
+        if (event.code == "Space") {
+            nopeus = -8;
+        }
+    });
+
+    function peliLoop() {
+
+        if (peli) {
+
+            // Painovoima
+            nopeus = nopeus + 0.5;
+            y = y + nopeus;
+
+            lintu.style.top = y + "px";
+
+            // Putki liikkuu vasemmalle
+            let x = putki.offsetLeft;
+            x = x - 3;
+            putki.style.left = x + "px";
+
+            // Putki alkaa uudestaan oikealta
+            if (x < -50) {
+                putki.style.left = "500px";
+            }
+
+            // Törmäys
+            if (
+                y < 0 ||
+                y > 370 ||
+                (x < 130 && x > 70 && y < 150)
+            ) {
+                peli = false;
+                document.getElementById("tulos").innerHTML = "Peli loppui!";
+            }
+
+            requestAnimationFrame(peliLoop);
+        }
+    }
+
+    peliLoop();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kivi, paperi, sakset</title>
+</head>
+<body>
+
+<h1>Kivi, paperi, sakset</h1>
+
+<button onclick="pelaa('kivi')">Kivi</button>
+<button onclick="pelaa('paperi')">Paperi</button>
+<button onclick="pelaa('sakset')">Sakset</button>
+
+<p id="tulos"></p>
+
+<script>
+    function pelaa(pelaaja) {
+
+        // Tietokoneen vaihtoehdot
+        let vaihtoehdot = ["kivi", "paperi", "sakset"];
+
+        // Tietokone arpoo vaihtoehdon
+        let tietokone = vaihtoehdot[Math.floor(Math.random() * 3)];
+
+        let tulos;
+
+        if (pelaaja == tietokone) {
+            tulos = "Tasapeli!";
+        }
+        else if (
+            (pelaaja == "kivi" && tietokone == "sakset") ||
+            (pelaaja == "paperi" && tietokone == "kivi") ||
+            (pelaaja == "sakset" && tietokone == "paperi")
+        ) {
+            tulos = "Sinä voitit!";
+        }
+        else {
+            tulos = "Tietokone voitti!";
+        }
+
+        document.getElementById("tulos").innerHTML =
+            "Sinä: " + pelaaja + "<br>" +
+            "Tietokone: " + tietokone + "<br>" +
+            tulos;
+    }
+</script>
+
+</body>
+</html>

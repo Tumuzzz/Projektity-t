@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Muistipeli</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #eeeeee;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        #peli {
+            width: 420px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .kortti {
+            height: 90px;
+            background-color: #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kortti img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .kortti:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Muistipeli</h1>
+
+<p>Valitse kaksi korttia ja etsi pari!</p>
+
+<p id="tulos">Löydetyt parit: 0 / 6</p>
+
+<div id="peli"></div>
+
+
+<script>
+
+    // Omat kuvat
+    let kortit = [
+        "kuva1.png", "kuva1.png",
+        "kuva2.png", "kuva2.png",
+        "kuva3.png", "kuva3.png",
+        "kuva4.png", "kuva4.png",
+        "kuva5.png", "kuva5.png",
+        "kuva6.png", "kuva6.png",
+        "kuva7.png", "kuva7.png"
+
+    ];
+
+
+    // Sekoitetaan kortit
+    kortit.sort(function() {
+        return Math.random() - 0.5;
+    });
+
+
+    let peli = document.getElementById("peli");
+
+    let ensimmäinen = null;
+    let toinen = null;
+
+    let ensimmäinenKuva = null;
+    let toinenKuva = null;
+
+    let parit = 0;
+    let lukittu = false;
+
+
+    // Luodaan 12 korttia
+    for (let i = 0; i < kortit.length; i++) {
+
+        let kortti = document.createElement("div");
+
+        kortti.className = "kortti";
+
+        // Kortin taakse tulee kysymysmerkki
+        kortti.innerHTML = "?";
+
+
+        kortti.onclick = function() {
+
+            // Estetään klikkaaminen liian nopeasti
+            if (lukittu) {
+                return;
+            }
+
+            // Jos kortti on jo avattu
+            if (kortti.innerHTML != "?") {
+                return;
+            }
+
+
+            // Näytetään kuva
+            kortti.innerHTML =
+                '<img src="' + kortit[i] + '">';
+
+
+            // Ensimmäinen kortti
+            if (ensimmäinen == null) {
+
+                ensimmäinen = kortti;
+                ensimmäinenKuva = kortit[i];
+
+            }
+
+            // Toinen kortti
+            else {
+
+                toinen = kortti;
+                toinenKuva = kortit[i];
+
+                lukittu = true;
+
+
+                // Tarkistetaan ovatko kuvat samat
+                if (ensimmäinenKuva == toinenKuva) {
+
+                    parit++;
+
+                    document.getElementById("tulos").innerHTML =
+                        "Löydetyt parit: " + parit + " / 6";
+
+                    ensimmäinen = null;
+                    toinen = null;
+
+                    ensimmäinenKuva = null;
+                    toinenKuva = null;
+
+                    lukittu = false;
+
+
+                    // Kaikki parit löytyivät
+                    if (parit == 6) {
+
+                        document.getElementById("tulos").innerHTML =
+                            "🎉 Voitit pelin! Kaikki parit löytyivät!";
+                    }
+
+                }
+
+                // Jos kortit eivät ole sama pari
+                else {
+
+                    setTimeout(function() {
+
+                        ensimmäinen.innerHTML = "?";
+                        toinen.innerHTML = "?";
+
+                        ensimmäinen = null;
+                        toinen = null;
+
+                        ensimmäinenKuva = null;
+                        toinenKuva = null;
+
+                        lukittu = false;
+
+                    }, 1000);
+
+                }
+
+            }
+
+        };
+
+
+        peli.appendChild(kortti);
+    }
+
+</script>
+
+</body>
+</html>

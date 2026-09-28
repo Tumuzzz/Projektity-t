@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Keräilypeli</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        canvas {
+            background-color: lightblue;
+            display: block;
+            margin: 20px auto;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Keräilypeli</h1>
+
+<canvas id="canvas" width="800" height="500"></canvas>
+
+<script>
+
+const canvas = document.getElementById("canvas");
+const piirto = canvas.getContext("2d");
+
+// Pelaaja
+let pelaaja = {
+    X: 100,
+    Y: 250,
+    pisteet: 0
+};
+
+// Hiiren sijainti
+let hiiri = {
+    X: 100,
+    Y: 250
+};
+
+// Aarre
+let aarre = {
+    X: 600,
+    Y: 250
+};
+
+// Vihollinen
+let vihollinen = {
+    X: 750,
+    Y: 450
+};
+
+
+// Lasketaan kahden hahmon etäisyys
+function etäisyys(hahmo1, hahmo2) {
+    let x = hahmo1.X - hahmo2.X;
+    let y = hahmo1.Y - hahmo2.Y;
+
+    return Math.sqrt(x * x + y * y);
+}
+
+
+// Liikutetaan hahmoa kohti toista hahmoa
+function siirräKohti(hahmo, kohde, nopeus) {
+
+    let et = etäisyys(hahmo, kohde);
+
+    if (et > 0) {
+        hahmo.X += (kohde.X - hahmo.X) / et * nopeus;
+        hahmo.Y += (kohde.Y - hahmo.Y) / et * nopeus;
+    }
+}
+
+
+// Hiiren liikuttaminen
+canvas.addEventListener("mousemove", function(event) {
+
+    let suorakulmio = canvas.getBoundingClientRect();
+
+    hiiri.X = event.clientX - suorakulmio.left;
+    hiiri.Y = event.clientY - suorakulmio.top;
+
+});
+
+
+// Piirtosilmukka
+function piirrä() {
+
+    // Tyhjennetään canvas
+    piirto.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Aarre
+    piirto.fillStyle = "gold";
+    piirto.beginPath();
+    piirto.arc(aarre.X, aarre.Y, 15, 0, Math.PI * 2);
+    piirto.fill();
+
+    // Pelaaja
+    piirto.fillStyle = "blue";
+    piirto.beginPath();
+    piirto.arc(pelaaja.X, pelaaja.Y, 15, 0, Math.PI * 2);
+    piirto.fill();
+
+    // Vihollinen
+    piirto.fillStyle = "red";
+    piirto.beginPath();
+    piirto.arc(vihollinen.X, vihollinen.Y, 18, 0, Math.PI * 2);
+    piirto.fill();
+
+    // Pisteet
+    piirto.fillStyle = "black";
+    piirto.font = "24px Arial";
+    piirto.fillText("Pisteet " + pelaaja.pisteet, 20, 35);
+
+    requestAnimationFrame(piirrä);
+}
+
+
+// Hahmojen liikuttaminen
+setInterval(function() {
+
+    // Pelaaja seuraa hiirtä
+    siirräKohti(pelaaja, hiiri, 1.5);
+
+    // Vihollinen jahtaa pelaajaa
+    siirräKohti(vihollinen, pelaaja, 0.5);
+
+
+    // Tarkistetaan osuiko pelaaja aarteeseen
+    if (etäisyys(pelaaja, aarre) < 30) {
+
+        pelaaja.pisteet++;
+
+        // Arvotaan aarteelle uusi paikka
+        do {
+            aarre.X = Math.random() * (canvas.width - 40) + 20;
+            aarre.Y = Math.random() * (canvas.height - 40) + 20;
+
+        } while (etäisyys(pelaaja, aarre) < 100);
+    }
+
+
+    // Tarkistetaan osuiko vihollinen pelaajaan
+    if (etäisyys(pelaaja, vihollinen) < 35) {
+
+        // Peli alkaa uudestaan
+        pelaaja.X = 100;
+        pelaaja.Y = 250;
+
+        vihollinen.X = 750;
+        vihollinen.Y = 450;
+
+        pelaaja.pisteet = 0;
+    }
+
+}, 10);
+
+
+// Aloitetaan piirtäminen
+piirrä();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matopeli</title>
+</head>
+
+<body>
+
+<canvas id="kangas" width="800" height="600"></canvas>
+
+<script>
+
+let kangas = document.getElementById("kangas");
+let piirtäjä = kangas.getContext("2d");
+
+let mato = {
+    X: 100,
+    Y: 100,
+    suunta: "oikea",
+    häntä: [],
+    aikaaKasvamiseen: 5
+};
+
+
+// Piirtäminen
+function piirra() {
+
+    piirtäjä.clearRect(0, 0, 800, 600);
+
+    // Pää
+    piirtäjä.fillStyle = "green";
+    piirtäjä.fillRect(mato.X, mato.Y, 100, 100);
+
+    // Häntä
+    for (let hännänOsa of mato.häntä) {
+        piirtäjä.fillStyle = "lightgreen";
+        piirtäjä.fillRect(hännänOsa.X, hännänOsa.Y, 100, 100);
+    }
+
+    requestAnimationFrame(piirra);
+}
+
+piirra();
+
+
+// Nuolinäppäimet
+document.onkeydown = function(event) {
+
+    if (event.key == "ArrowUp") {
+        mato.suunta = "ylös";
+    }
+
+    if (event.key == "ArrowDown") {
+        mato.suunta = "alas";
+    }
+
+    if (event.key == "ArrowLeft") {
+        mato.suunta = "vasen";
+    }
+
+    if (event.key == "ArrowRight") {
+        mato.suunta = "oikea";
+    }
+};
+
+
+// Madon liikuttaminen
+setInterval(function() {
+
+    // Lisätään häntä vanhan pään kohdalle
+    mato.häntä.unshift({
+        X: mato.X,
+        Y: mato.Y
+    });
+
+    // Kasvamislaskuri
+    mato.aikaaKasvamiseen--;
+
+
+    // Liikutetaan päätä
+    if (mato.suunta == "ylös") {
+        mato.Y -= 100;
+    }
+
+    if (mato.suunta == "alas") {
+        mato.Y += 100;
+    }
+
+    if (mato.suunta == "vasen") {
+        mato.X -= 100;
+    }
+
+    if (mato.suunta == "oikea") {
+        mato.X += 100;
+    }
+
+
+    // Poistetaan hännän viimeinen osa
+    if (mato.aikaaKasvamiseen != 0) {
+        mato.häntä.pop();
+    }
+    else {
+        mato.aikaaKasvamiseen = 5;
+    }
+
+
+    // Törmäys häntään
+    for (let hännänOsa of mato.häntä) {
+
+        if (mato.X == hännänOsa.X &&
+            mato.Y == hännänOsa.Y) {
+
+            alert("Hävisit!");
+            location.reload();
+        }
+    }
+
+
+    // Törmäys seinään
+    if (mato.X < 0 ||
+        mato.X > 700 ||
+        mato.Y < 0 ||
+        mato.Y > 500) {
+
+        alert("Hävisit!");
+        location.reload();
+    }
+
+}, 400);
+
+</script>
+
+</body>
+</html>
