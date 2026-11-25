@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tuomas Ihalaisen portfolio ja osaaminen tieto- ja viestintätekniikasta.">
+    <title>Tuomas Ihalainen | Portfolio</title>
+    <link rel="stylesheet" href="projektityyli.css">
+</head>
+<body>
+
+    <header>
+        <nav aria-label="Päävalikko">
+            <a class="logo" href="#etusivu" aria-label="Siirry etusivulle">TI<span>.</span></a>
+            <div class="nav-links">
+                <a href="#etusivu">Etusivu</a>
+                <a href="#tietoa-minusta">Tietoa minusta</a>
+                <a href="#ota-yhteytta">Ota yhteyttä</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="etusivu">
+            <div class="hero-content">
+                <p class="eyebrow">Portfolio / 2026</p>
+                <h1>Hei, olen <span>Tuomas</span></h1>
+                <p class="intro">
+                    Tieto- ja viestintätekniikan opiskelija, joka kiinnostuu
+                    verkkosivujen ja sovellusten tekemisestä.
+                </p>
+                <a class="primary-button" href="#tietoa-minusta">Tutustu osaamiseeni</a>
+            </div>
+            <div class="hero-mark" aria-hidden="true">&lt;/&gt;</div>
+        </section>
+
+        <section id="tietoa-minusta" class="content-section">
+            <div class="section-heading">
+                <p class="eyebrow">Minusta</p>
+                <h2>Tietoa ja taitoja</h2>
+            </div>
+
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>Vapaa-aika</h3>
+                    <p>Vapaa-ajallani pelaan tietokoneella, kuuntelen musiikkia ja soitan rumpuja.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Koulutus</h3>
+                    <p>Opiskelen tieto- ja viestintätekniikkaa. Olen toisen vuoden opiskelija.</p>
+                </article>
+            </div>
+
+            <h3 class="skills-title">Osaamiset</h3>
+            <div class="skills" aria-label="Tekniset osaamiset">
+                <span>HTML <small>Kohtuullinen</small></span>
+                <span>CSS <small>Kohtuullinen</small></span>
+                <span>Bootstrap <small>Kohtuullinen</small></span>
+                <span>C# <small>Alkeet</small></span>
+                <span>JavaScript <small>Alkeet</small></span>
+                <span>Expo Go <small>Alkeet</small></span>
+            </div>
+        </section>
+
+        <section id="ota-yhteytta" class="content-section contact-section">
+            <div class="section-heading">
+                <p class="eyebrow">Yhteys</p>
+                <h2>Ota yhteyttä</h2>
+            </div>
+
+            <form action="mailto:tuomas.ihalainen@edu.sakky.fi" method="post" enctype="text/plain">
+                <label>
+                    <span>Nimi</span>
+                    <input type="text" name="nimi" placeholder="Nimesi" required>
+                </label>
+                <label>
+                    <span>Sähköposti</span>
+                    <input type="email" name="email" placeholder="nimi@esimerkki.fi" required>
+                </label>
+                <label>
+                    <span>Viesti</span>
+                    <textarea name="viesti" placeholder="Kirjoita viestisi tähän..." rows="5" required></textarea>
+                </label>
+                <button type="submit">Lähetä viesti</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Tuomas Ihalainen</p>
+    </footer>
+</body>
+</html>
